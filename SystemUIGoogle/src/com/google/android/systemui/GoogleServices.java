@@ -9,8 +9,6 @@ import com.android.systemui.VendorServices;
 import com.android.systemui.statusbar.phone.CentralSurfaces;
 import com.android.systemui.util.wakelock.DelayedWakeLock;
 
-import com.google.android.systemui.ambientmusic.AmbientIndicationContainer;
-import com.google.android.systemui.ambientmusic.AmbientIndicationService;
 import com.google.android.systemui.input.TouchContextService;
 import com.google.android.systemui.columbus.ColumbusContext;
 import com.google.android.systemui.columbus.ColumbusServiceWrapper;
@@ -66,14 +64,6 @@ public class GoogleServices extends VendorServices {
         if (mContext.getResources().getBoolean(R.bool.config_touch_context_enabled)) {
             addService(new TouchContextService(mContext));
         }
-
-        final AmbientIndicationContainer ambientIndicationContainer =
-            (AmbientIndicationContainer) mCentralSurfaces
-                .getNotificationShadeWindowView()
-                    .findViewById(R.id.ambient_indication_container);
-        ambientIndicationContainer.initializeView(
-            mContext, mCentralSurfaces, ambientIndicationContainer, mDelayedWakeLockFactory);
-        addService(new AmbientIndicationService(mContext, ambientIndicationContainer, mAlarmManager));
     }
 
     private void addService(Object obj) {
