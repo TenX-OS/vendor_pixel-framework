@@ -178,18 +178,29 @@ public class DockIndicationController implements StatusBarStateController.StateL
     void initializeIconViews() {
         NotificationShadeWindowView notificationShadeWindowView = mCentralSurfaces.getNotificationShadeWindowView();
         ImageView imageView = (ImageView) notificationShadeWindowView.findViewById(R.id.docked_top_icon);
-        mDockedTopIcon = imageView;
-        imageView.setImageResource(R.drawable.ic_assistant_logo);
+        if (imageView != null) {
+            mDockedTopIcon = imageView;
+            imageView.setImageResource(R.drawable.ic_assistant_logo);
+        }
         ImageView imageView2 = mDockedTopIcon;
         int i = R.string.accessibility_assistant_poodle;
-        imageView2.setContentDescription(mContext.getString(i));
-        mDockedTopIcon.setTooltipText(mContext.getString(i));
-        mDockedTopIcon.setOnClickListener(this);
+        if (imageView2 != null) {
+            imageView2.setContentDescription(mContext.getString(i));
+        }
+        if (mDockedTopIcon != null) {
+            mDockedTopIcon.setTooltipText(mContext.getString(i));
+            mDockedTopIcon.setOnClickListener(this);
+        }
         mDockPromo = (FrameLayout) notificationShadeWindowView.findViewById(R.id.dock_promo);
         TextView textView = (TextView) notificationShadeWindowView.findViewById(R.id.photo_promo_text);
-        mPromoText = textView;
-        textView.setAutoSizeTextTypeUniformWithConfiguration(10, 16, 1, 2);
-        notificationShadeWindowView.findViewById(R.id.ambient_indication).addOnAttachStateChangeListener(this);
+        if (textView != null) {
+            mPromoText = textView;
+            textView.setAutoSizeTextTypeUniformWithConfiguration(10, 16, 1, 2);
+        }
+        View ambientIndicationView = notificationShadeWindowView.findViewById(R.id.ambient_indication);
+        if (ambientIndicationView != null) {
+            ambientIndicationView.addOnAttachStateChangeListener(this);
+        }
         mTopIndicationView = (KeyguardIndicationTextView) notificationShadeWindowView.findViewById(R.id.keyguard_indication_text);
         mIconViewsValidated = true;
     }
@@ -245,16 +256,22 @@ public class DockIndicationController implements StatusBarStateController.StateL
         boolean z = false;
         if (!mDozing || !mDocking) {
             mDockPromo.setVisibility(8);
-            mDockedTopIcon.setVisibility(8);
+            if (mDockedTopIcon != null) {
+                mDockedTopIcon.setVisibility(8);
+            }
             int i = mStatusBarState;
             if (i == 1 || i == 2) {
                 z = true;
             }
             mKeyguardIndicationController.setVisible(z);
         } else if (!mTopIconShowing) {
-            mDockedTopIcon.setVisibility(8);
+            if (mDockedTopIcon != null) {
+                mDockedTopIcon.setVisibility(8);
+            }
         } else {
-            mDockedTopIcon.setVisibility(0);
+            if (mDockedTopIcon != null) {
+                mDockedTopIcon.setVisibility(0);
+            }
         }
     }
 
